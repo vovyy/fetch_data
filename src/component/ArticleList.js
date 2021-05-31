@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from "react-router-dom";
+import {useState} from 'react'
+
 export class ArticleList extends Component {
+
+    
     constructor(props){
         super(props)
+        
 
         this.state= {
            articles: []
         }
+    
+
     }
+    
 //     this.state= {
 //         posts: []
 //      }
@@ -38,7 +47,7 @@ export class ArticleList extends Component {
 // }
 
 componentDidMount(){
-    axios.get('http://www.get-articles.tode.cz/articles/get')
+    axios.get('http://localhost/www/nette-blog/www/articles/get')
     .then( response => {
         console.log(response)
         this.setState({articles:response.data})
@@ -47,22 +56,40 @@ componentDidMount(){
         console.log(error)
     } )
 }
+
+handleEdit( article)
+{
+    const content = article.content;
+    const title = article.title;
+console.log(article)
+    
+}
+
+
 render() {
+    
     const { articles } = this.state
-    return (
+    return  ( 
         <div>
             List of Articles
           
+          
             {
-               
+            
                 articles.length ?
                 articles.map(article => <div key={article.id}><br/>
-            <br/>{article.title}<br/><br/>{article.content}</div>) :
+            <br/>{article.title}<br/><br/>{article.content}<br/><Link to={`/editform/${article.id}`}><button onClick={() =>{}}>Editovat</button></Link></div>) :
                 null
+                
             }
+          
         </div>
+        
+        
     )
+    
 }
+
 }
 
 export default ArticleList
